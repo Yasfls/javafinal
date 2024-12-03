@@ -19,18 +19,17 @@ public class Menu {
             
             System.out.println("Opções: ");
             System.out.println("1 - Cadastrar Local");
-            System.out.println("2 - Cadastrar Pessoa");
-            System.out.println("3 - Cadastrar Organizador");
-            System.out.println("4 - Cadastrar Participante");
+            System.out.println("2 - Cadastrar Organizador");
+            System.out.println("3 - Cadastrar Participante");
             System.out.println("5 - Cadastrar Evento");
             System.out.println("6 - Listar Locais");
-            System.out.println("9 - Listar Eventos");
-            System.out.println("10 - Listar Pessoas");
-            System.out.println("11 - Sair");
+            System.out.println("7 - Listar Eventos");
+            System.out.println("8 - Listar Organizadores");
+            System.out.println("9 - Listar Participantes");
+            System.out.println("10 - Sair");
             try {
                 opt = scanner.nextInt();
             
-            //opção 1 - inserindo os dados no objeto Pofessor
             switch (opt) {
                 case 1: 
                     try {
@@ -53,38 +52,22 @@ public class Menu {
                         con.close();
                     }
                     break;
-            //opção 2 - inserindo os dados no objeto curso
+
                 case 2:
                     try {
-                        System.out.println("Informe o id da pessoa");
-                        Integer id_pessoa = scanner.nextInt();
-                        System.out.println("Informe o nome da pessoa");
-                        String nome = scanner.nextLine();
-                                        
-                        con = DriverManager.getConnection(url, user, password);
-                        Statement stm = con.createStatement();
-                        stm.executeUpdate("INSERT INTO pessoa "
-                            + "(id_pessoa, nome_pessoa) VALUES "
-                            + "('"+id_pessoa+"', '"+nome+"')");
-
-                        } catch (SQLException e) {
-                            System.out.println(e.getMessage());
-                        } finally {                        
-                            con.close();
-                        }
-                        break;
-                    
-            //opção 3 - inserindo os dados no objeto aluno
-                case 3:
-                    try {
+                        System.out.println("Informe o id do organizador");
+                        Integer id_org = scanner.nextInt();
+                        System.out.println("Informe o nome do organizador");
+                        String nome_org = scanner.nextLine();
                         System.out.println("Informe o email do organizador");
                         String email = scanner.nextLine();
+                        
 
                         con = DriverManager.getConnection(url, user, password);
                         Statement stm = con.createStatement();
                         stm.executeUpdate("INSERT INTO organizador "
-                            + "(email_org) VALUES "
-                            + "('"+email+"')");
+                            + "(id_org, email_org) VALUES "
+                            + "('"+id_org+"', '"+nome_org+"','"+email+"')");
 
                         } catch (SQLException e) {
                             System.out.println(e.getMessage());
@@ -93,16 +76,20 @@ public class Menu {
                         }
                         break;
 
-                case 4:
+                case 3:
                     try {
+                        System.out.println("Informe o id do participante");
+                        Integer id_part = scanner.nextInt();
+                        System.out.println("Informe o nome do participante");
+                        String nome_part = scanner.nextLine();
                         System.out.println("Informe o telefone do participante");
                         String telefone = scanner.nextLine();
                                         
                         con = DriverManager.getConnection(url, user, password);
                         Statement stm = con.createStatement();
                         stm.executeUpdate("INSERT INTO participante "
-                            + "(tel_part) VALUES "
-                            + "('"+telefone+"')");
+                            + "(,id_part,nome_part,tel_part) VALUES "
+                            + "('"+id_part+"','"+nome_part+"','"+telefone+"')");
 
                         } catch (SQLException e) {
                             System.out.println(e.getMessage());
@@ -111,7 +98,7 @@ public class Menu {
                         }
                         break;
 
-                case 5: 
+                case 4: 
                     try {
                         System.out.println("Informe o id do evento");
                         Integer id_evento = scanner.nextInt();
@@ -119,7 +106,7 @@ public class Menu {
                         Integer id_org = scanner.nextInt();
                         System.out.println("Informe o id do local");
                         Integer id_local = scanner.nextInt();
-                        System.out.println("Informe o número de cagas do evento");
+                        System.out.println("Informe o número de vagas do evento");
                         Integer vagas_evento = scanner.nextInt();
                         System.out.println("Informe a data do evento");
                         String data = scanner.nextLine();
@@ -138,8 +125,8 @@ public class Menu {
                         con.close();
                     }
                     break;
-            //opção 4 - imprimindo a lista de professores
-                case 6:
+
+                case 5:
                     try {
                         con = DriverManager.getConnection(url, user, password);
                         Statement stm = con.createStatement();
@@ -157,7 +144,7 @@ public class Menu {
                     }
                     break;
 
-                    case 11:
+                    case 10:
                         System.out.println("Saindo...");
                         break;
                     default:
@@ -169,7 +156,7 @@ public class Menu {
             scanner.nextLine();
             continue;
         }
-        } while (opt != 11);
+        } while (opt != 10);
     
     
 

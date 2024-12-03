@@ -12,4 +12,5 @@ public class Lugar {
             this.descricao = descricao;
             this.vagas = vagas;
         }
+
 }

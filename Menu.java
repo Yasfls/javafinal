@@ -39,7 +39,7 @@ public class Menu {
                         System.out.println("Informe o id do local");
                         Integer id_local = scanner.nextInt();
                         System.out.println("Informe a descricao do local");
-                        String descricao = scanner.next();
+                        String descricao = scanner.nextLine();
                         System.out.println("Informe o número de vagas no local");
                         Integer vagas = scanner.nextInt();
                                            
@@ -62,7 +62,7 @@ public class Menu {
                         System.out.println("Informe o id do organizador");
                         Integer id_organizador = scanner.nextInt();
                         System.out.println("Informe o email do organizador");
-                        String email = scanner.next();
+                        String email = scanner.nextLine();
                                            
                         Connection con = DriverManager.getConnection(url, user, password);
                         Statement stm = con.createStatement();
@@ -83,7 +83,7 @@ public class Menu {
                         System.out.println("Informe o id do participante");
                         Integer id_participante = scanner.nextInt();
                         System.out.println("Informe o telefone do participante");
-                        String telefone = scanner.next();
+                        String telefone = scanner.nextLine();
                                            
                         Connection con = DriverManager.getConnection(url, user, password);
                         Statement stm = con.createStatement();
@@ -131,7 +131,7 @@ public class Menu {
                         System.out.println("Informe o id da pessoa");
                         Integer id_pessoa = scanner.nextInt();
                         System.out.println("Informe o nome da pessoa");
-                        String nome = scanner.next();
+                        String nome = scanner.nextLine();
                                            
                         Connection con = DriverManager.getConnection(url, user, password);
                         Statement stm = con.createStatement();

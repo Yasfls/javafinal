@@ -98,6 +98,54 @@ public class Menu {
                         System.out.println(e.getMessage());
                     }
                     break;
+
+                case 4: 
+                    try {
+                        System.out.println("Informe o id do evento");
+                        Integer id_evento = scanner.nextInt();
+                        System.out.println("Informe o id do organizador do evento");
+                        Integer id_organizador = scanner.nextInt();
+                        System.out.println("Informe o id do local do evento");
+                        Integer id_local = scanner.nextInt();
+                        System.out.println("Informe a data do evento");
+                        String data = scanner.next();
+                        System.out.println("Informe o numero de vagas");
+                        Integer vagas = scanner.nextInt();
+                                           
+                        Connection con = DriverManager.getConnection(url, user, password);
+                        Statement stm = con.createStatement();
+                        boolean sql = stm.execute("INSERT INTO evento "
+                            + "(id_evento, id_organizador, id_local, data, vagas) VALUES "
+                            + "('"+id_evento+"', '"+id_organizador+"', '"+id_local+"', '"+data+"', '"+vagas+"')");
+                        if(!sql) {
+                            System.out.println("Falha na execução");
+                        }
+                        con.close();
+                    } catch (SQLException e) {
+                        System.out.println(e.getMessage());
+                    }
+                    break;
+
+                case 5: 
+                    try {
+                        System.out.println("Informe o id da pessoa");
+                        Integer id_pessoa = scanner.nextInt();
+                        System.out.println("Informe o nome da pessoa");
+                        String nome = scanner.next();
+                                           
+                        Connection con = DriverManager.getConnection(url, user, password);
+                        Statement stm = con.createStatement();
+                        boolean sql = stm.execute("INSERT INTO pessoa "
+                            + "(id_pessoa, nome) VALUES "
+                            + "('"+id_pessoa+"', '"+nome+"')");
+                        if(!sql) {
+                            System.out.println("Falha na execução");
+                        }
+                        con.close();
+                    } catch (SQLException e) {
+                        System.out.println(e.getMessage());
+                    }
+                    break;
             //opção 4 - imprimindo a lista de professores
                 case 6:
                 try {
@@ -105,7 +153,7 @@ public class Menu {
                     Statement stm = con.createStatement();
                     ResultSet sql = stm.executeQuery("SELECT * FROM lugar;");
                     while(sql.next()) {
-                        System.out.println(new lugar(
+                        System.out.println(new Lugar(
                             sql.getInt("id_local"),
                             sql.getString("descricao"),
                             sql.getString("vagas")
@@ -116,80 +164,7 @@ public class Menu {
                     System.out.println(e.getMessage());
                 }
                 break;
-                //opção 5 imprimindo as inserções do objeto curso com o nome do professor que o leciona, sendo puxado pelo id inserido no objeto
-                case 7:
-                try {
-                    Connection con = DriverManager.getConnection(url, user, password);
-                    Statement stm = con.createStatement();
-                    ResultSet sql = stm.executeQuery("SELECT * FROM aluno;");
-                    while(sql.next()) {
-                        ResultSet sqlCurso = stm.executeQuery("SELECT * FROM curso WHERE id = " + sql.getInt("idCurso") + ";");
 
-                        if (sqlCurso.next()) {
-                            ResultSet sqlProfessor = stm.executeQuery("SELECT * FROM professor WHERE id = " + sqlCurso.getInt("idProfessor") + ";");
-
-                            if (sqlProfessor.next()) {
-                                Professor professor = new Professor(
-                                    sqlProfessor.getInt("idProfessor"),
-                                    sqlProfessor.getString("nomeProfessor"),
-                                    sqlProfessor.getString("departamentoProf")
-                                );
-    
-                                Curso curso = new Curso(
-                                    sqlCurso.getInt("idCurso"),
-                                    sqlCurso.getString("nomeCurso"),
-                                    sqlCurso.getInt("cargaHoras"),
-                                    professor
-                                );
-    
-                                System.out.println(new Curso(
-                                    sqlCurso.getInt("idCurso"),
-                                    sqlCurso.getString("nomeCurso"),
-                                    sqlCurso.getInt("cargaHoras"),
-                                    professor
-                                ));
-                            }
-                        }
-                    }
-                    con.close();
-                } catch (SQLException e) {
-                    System.out.println(e.getMessage());
-                }
-                break;
-                //opção 6 imprimindo as inerções do objeto aluno com o nome do curso em que ele está matriculado, o nome é puxado pelo id inserido no objeto
-                case 8:
-                try {
-                    Connection con = DriverManager.getConnection(url, user, password);
-                    Statement stm = con.createStatement();
-                    ResultSet sql = stm.executeQuery("SELECT * FROM curso;");
-                    while(sql.next()) {
-                        ResultSet sqlCurso = stm.executeQuery("SELECT * FROM curso WHERE id = " + sql.getInt("idCurso") + ";");
-
-                        if (sqlCurso.next()) {
-                            ResultSet sqlProfessor = stm.executeQuery("SELECT * FROM professor WHERE id = " + sqlCurso.getInt("idProfessor") + ";");
-
-                            if (sqlProfessor.next()) {
-                                Professor professor = new Professor(
-                                    sqlProfessor.getInt("idProfessor"),
-                                    sqlProfessor.getString("nomeProfessor"),
-                                    sqlProfessor.getString("departamentoProf")
-                                );
-    
-                                System.out.println(new Curso(
-                                    sql.getInt("idCurso"),
-                                    sql.getString("nomeCurso"),
-                                    sql.getString("cargaHoras"),
-                                    
-                                ));
-                            }
-                        }
-                    }
-                    con.close();
-                } catch (SQLException e) {
-                    System.out.println(e.getMessage());
-                }
-                break;
-                //opção 7 fecha o programa e saí do loop do while
                 case 11:
                     System.out.println("Saindo...");
                     break;

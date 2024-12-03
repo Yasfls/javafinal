@@ -1,20 +1,20 @@
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.sql.Timestamp;
 import java.util.Scanner;
 
 public class Menu {
         public static void main(String[] args) throws Exception {
-        final String url = "jdbc:mysql://localhost:3306/javafinal";
+
+        final String url = "jdbc:mysql://localhost:3306/evento";
         final String user = "root";
         final String password = "";
         Scanner scanner = new Scanner(System.in);
         int opt=0;
+        Connection con = null;
+
         do {
             
             System.out.println("Opções: ");
@@ -39,21 +39,20 @@ public class Menu {
                         System.out.println("Informe o id do local");
                         Integer id_local = scanner.nextInt();
                         System.out.println("Informe a descricao do local");
-                        String descricao = scanner.nextLine();
+                        String descricao = scanner.next();
                         System.out.println("Informe o número de vagas no local");
                         Integer vagas = scanner.nextInt();
                                            
-                        Connection con = DriverManager.getConnection(url, user, password);
-                        Statement stm = con.createStatement();
-                        boolean sql = stm.execute("INSERT INTO lugar "
-                            + "(id_local, descricao, vagas) VALUES "
-                            + "('"+id_local+"', '"+descricao+"', '"+vagas+"')");
-                        if(!sql) {
-                            System.out.println("Falha na execução");
-                        }
-                        con.close();
+                        con = DriverManager.getConnection(url, user, password);
+                        Statement stm = con.createStatement();                        
+                        stm.executeUpdate("INSERT INTO local "
+                            + "(id_local, desc_local, vagas_local) VALUES "
+                            + "('"+id_local+"', '"+descricao+"', '"+vagas+"')");                       
+                        
                     } catch (SQLException e) {
                         System.out.println(e.getMessage());
+                    } finally {                        
+                        con.close();
                     }
                     break;
             //opção 2 - inserindo os dados no objeto curso
@@ -64,17 +63,18 @@ public class Menu {
                         System.out.println("Informe o email do organizador");
                         String email = scanner.nextLine();
                                            
-                        Connection con = DriverManager.getConnection(url, user, password);
+                        con = DriverManager.getConnection(url, user, password);
                         Statement stm = con.createStatement();
                         boolean sql = stm.execute("INSERT INTO organizador "
-                            + "(id_organizador, email) VALUES "
+                            + "(id_org, email_org) VALUES "
                             + "('"+id_organizador+"', '"+email+"')");
                         if(!sql) {
                             System.out.println("Falha na execução");
                         }
-                        con.close();
                     } catch (SQLException e) {
                         System.out.println(e.getMessage());
+                    } finally {
+                        con.close();
                     }
                     break;
             //opção 3 - inserindo os dados no objeto aluno
@@ -85,17 +85,19 @@ public class Menu {
                         System.out.println("Informe o telefone do participante");
                         String telefone = scanner.nextLine();
                                            
-                        Connection con = DriverManager.getConnection(url, user, password);
+                        con = DriverManager.getConnection(url, user, password);
                         Statement stm = con.createStatement();
                         boolean sql = stm.execute("INSERT INTO participante "
-                            + "(id_participante, telefone) VALUES "
+                            + "(id_part, tel_part) VALUES "
                             + "('"+id_participante+"', '"+telefone+"')");
                         if(!sql) {
                             System.out.println("Falha na execução");
                         }
-                        con.close();
+                        
                     } catch (SQLException e) {
                         System.out.println(e.getMessage());
+                    }finally {
+                        con.close();
                     }
                     break;
 
@@ -112,17 +114,19 @@ public class Menu {
                         System.out.println("Informe o numero de vagas");
                         Integer vagas = scanner.nextInt();
                                            
-                        Connection con = DriverManager.getConnection(url, user, password);
+                        con = DriverManager.getConnection(url, user, password);
                         Statement stm = con.createStatement();
                         boolean sql = stm.execute("INSERT INTO evento "
-                            + "(id_evento, id_organizador, id_local, data, vagas) VALUES "
+                            + "(id_evento, id_org, id_local, data_evento, vagas_evento) VALUES "
                             + "('"+id_evento+"', '"+id_organizador+"', '"+id_local+"', '"+data+"', '"+vagas+"')");
                         if(!sql) {
                             System.out.println("Falha na execução");
                         }
-                        con.close();
+                        
                     } catch (SQLException e) {
                         System.out.println(e.getMessage());
+                    }finally {
+                        con.close();
                     }
                     break;
 
@@ -133,31 +137,33 @@ public class Menu {
                         System.out.println("Informe o nome da pessoa");
                         String nome = scanner.nextLine();
                                            
-                        Connection con = DriverManager.getConnection(url, user, password);
+                        con = DriverManager.getConnection(url, user, password);
                         Statement stm = con.createStatement();
                         boolean sql = stm.execute("INSERT INTO pessoa "
-                            + "(id_pessoa, nome) VALUES "
+                            + "(id_pessoa, nome_pessoa) VALUES "
                             + "('"+id_pessoa+"', '"+nome+"')");
                         if(!sql) {
                             System.out.println("Falha na execução");
                         }
-                        con.close();
+                        
                     } catch (SQLException e) {
                         System.out.println(e.getMessage());
+                    }finally {
+                        con.close();
                     }
                     break;
             //opção 4 - imprimindo a lista de professores
                 case 6:
                 try {
-                    Connection con = DriverManager.getConnection(url, user, password);
+                    con = DriverManager.getConnection(url, user, password);
                     Statement stm = con.createStatement();
-                    ResultSet sql = stm.executeQuery("SELECT * FROM lugar;");
+                    ResultSet sql = stm.executeQuery("SELECT * FROM local;");
                     while(sql.next()) {
-                        System.out.println(new Lugar(
-                            sql.getInt("id_local"),
-                            sql.getString("descricao"),
-                            sql.getString("vagas")
-                        ));
+                        System.out.println(
+                            "Id: " +  sql.getInt("id_local") 
+                            + " Descrição: " + sql.getString("desc_local")
+                            + " Vagas: " + sql.getInt("vagas_local")
+                        );
                     }
                     con.close();
                 } catch (SQLException e) {

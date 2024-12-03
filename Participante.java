@@ -1,9 +1,9 @@
 public class Participante {
-    int id_participante;
+    Pessoa id_participante;
     String telefone;
 
     public Participante(
-        int id_participante,
+        Pessoa id_participante,
         String telefone
         ){
             this.id_participante = id_participante;

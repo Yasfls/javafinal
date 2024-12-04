@@ -26,7 +26,7 @@ public class Menu {
             System.out.println("6 - Listar Organizadores");
             System.out.println("7 - Listar Participantes");
             System.out.println("8 - Listar Eventos");
-            System.out.println("10 - Sair");
+            System.out.println("9 - Sair");
             try {
                 opt = scanner.nextInt();
             
@@ -201,7 +201,7 @@ public class Menu {
                     }
                     break;
 
-                    case 10:
+                    case 9:
                         System.out.println("Saindo...");
                         break;
                     default:
@@ -213,7 +213,7 @@ public class Menu {
             scanner.nextLine();
             continue;
         }
-        } while (opt != 10);
+        } while (opt != 9);
     
     
 
